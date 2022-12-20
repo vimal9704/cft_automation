@@ -1,0 +1,7 @@
+[
+    "ACL=Private",
+    "BucketName=cft-automation-test-bucket-1-1282019",
+    "Encryption=true",
+    "KmsKeyId=0d1698da-665f-4fca-8f4c-6e7028e0084e",
+    "Versioning=Suspended"
+]
