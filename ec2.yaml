@@ -125,7 +125,7 @@ Resources:
       SecurityGroups:
       - Ref: InstanceSecurityGroup
       - Ref: SSHSecurityGroup
-      InstanceType: t2.large
+      InstanceType: t2.small
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
