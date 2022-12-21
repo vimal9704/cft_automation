@@ -105,21 +105,18 @@ Resources:
     Properties:
       Tags:
       - Key: Name
-        Value:
-          !Ref InstanceName
+        Value: ec2-instance
         PropagateAtLaunch: 'true'
       LaunchConfigurationName:
         Ref: LaunchConfiguration
       MinSize: 1
       MaxSize: 1
-      VPCZoneIdentifier:
-        - !Ref SubnetId
+      VPCZoneIdentifier: subnet-0ae420d5cdcfb21bd
   LaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       IamInstanceProfile: !Ref InstanceProfile
-      KeyName:
-        Ref: KeyName
+      KeyName: key-name
       ImageId:
         Fn::FindInMap:
         - AMI2RegionMap
@@ -128,19 +125,11 @@ Resources:
       SecurityGroups:
       - Ref: InstanceSecurityGroup
       - Ref: SSHSecurityGroup
-      InstanceType:
-        Ref: InstanceType
-      UserData:
-        Fn::Base64:
-          !Sub |
-            #!/bin/bash -x
-            apt-get update
-            apt-get install --yes awscli
+      InstanceType: t2.large
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      VpcId:
-        !Ref VpcId
+      VpcId: vpc-08d6de661501d6a09
       GroupDescription: Enable HTTP and HTTPS
       SecurityGroupIngress:
       - IpProtocol: tcp
@@ -155,15 +144,13 @@ Resources:
   SSHSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      VpcId:
-        !Ref VpcId
+      VpcId: vpc-08d6de661501d6a09
       GroupDescription: Enable SSH access and HTTP from the load balancer only
       SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: '22'
         ToPort: '22'
-        CidrIp:
-          Ref: SshCidrAllow
+        CidrIp: 0.0.0.0/0
 Outputs:
   InstanceSecurityGroup:
     Description: Security group ec2
